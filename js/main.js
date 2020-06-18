@@ -3,7 +3,7 @@ let stack = {
     items: null,
     total: 0,
     speed: 0,
-    current: 0
+    current: 1
 }
 
 let debug = {}
@@ -19,9 +19,9 @@ function updateStack(offset) {
     if (stack.speed !== 0) {
         let prev = parseInt(stack.el.getAttribute('data-current'))
         let current = prev + offset;
-        if (current <= stack.total && current >= 0) {
+        if (current <= stack.total && current >= 1) {
             stack.current = current;
-        } else if (current < 0) {
+        } else if (current < 1) {
             stack.current = stack.total;
         } else if (current > stack.total) {
             stack.current = 1;
@@ -53,7 +53,7 @@ function handleTouchMove(e) {
 function stackLoop() {
     let offset = 1;
     if (stack.speed < 0) {
-        let offset = -1;
+        offset = -1;
     }
     updateStack(offset)
     window.setTimeout(stackLoop, stack.delay)
@@ -78,7 +78,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('wheel', e => {
         e.preventDefault()
-        let offset = 0;
         if (e.deltaY > 0) {
             stack.speed -= 1;
         } else {
