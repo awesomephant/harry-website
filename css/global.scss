@@ -5,13 +5,16 @@
 }
 
 body {
-    background: rgb(230, 209, 245);
+    background-color: rgb(230, 209, 245);
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAEklEQVQImWNgYGD4z0AswK4SAFXuAf8EPy+xAAAAAElFTkSuQmCC');
+    background-size: 4px;
+    
 }
 
 .debug {
     position: absolute;
     bottom: 0;
-    color: white;
-    font-size: 20px;
+    color: black;
+    font-size: 25px;
     padding: .5em;
 }

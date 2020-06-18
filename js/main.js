@@ -2,6 +2,7 @@ let stack = {
     el: null,
     items: null,
     total: 0,
+    speed: 0,
     current: 0
 }
 
@@ -10,15 +11,23 @@ let lastTouchY = 0;
 
 function updateDebug() {
     debug.current.textContent = `Current: ${stack.current}`;
+    debug.speed.textContent = `Speed: ${stack.speed}`;
+    debug.delay.textContent = `Delay: ${stack.delay}ms`;
 }
 
 function updateStack(offset) {
-    console.log('going to ' + offset)
-    let prev = parseInt(stack.el.getAttribute('data-current'))
-    let current = prev + offset;
-    if (current < stack.total && current > 0) {
-        stack.current = current;
+    if (stack.speed !== 0) {
+        let prev = parseInt(stack.el.getAttribute('data-current'))
+        let current = prev + offset;
+        if (current <= stack.total && current >= 0) {
+            stack.current = current;
+        } else if (current < 0) {
+            stack.current = stack.total;
+        } else if (current > stack.total) {
+            stack.current = 1;
+        }
         stack.el.setAttribute('data-current', stack.current)
+        updateDebug()
     }
 }
 
@@ -34,17 +43,26 @@ function handleTouchMove(e) {
     const deltaY = lastTouchY - touch.clientY;
     let offset = 0;
     if (deltaY > 0) {
-        offset = 1;
+        stack.speed += 1;
     } else {
-        offset = -1
+        stack.speed -= 1;
+    }
+    updateDebug()
+}
+
+function stackLoop() {
+    let offset = 1;
+    if (stack.speed < 0) {
+        let offset = -1;
     }
     updateStack(offset)
-    updateDebug()
+    window.setTimeout(stackLoop, stack.delay)
 }
 
 window.addEventListener('DOMContentLoaded', () => {
     debug.current = document.querySelector('#debug-current')
-    debug.offset = document.querySelector('#debug-offset')
+    debug.speed = document.querySelector('#debug-speed')
+    debug.delay = document.querySelector('#debug-delay')
     stack.el = document.querySelector('.stack')
     stack.items = document.querySelectorAll('.stack img')
     stack.total = stack.items.length;
@@ -56,15 +74,24 @@ window.addEventListener('DOMContentLoaded', () => {
     window.addEventListener("touchcancel", handleTouchCancel, false);
     window.addEventListener("touchmove", handleTouchMove, false);
 
+    stackLoop();
+
     window.addEventListener('wheel', e => {
         e.preventDefault()
         let offset = 0;
         if (e.deltaY > 0) {
-            offset = 1;
+            stack.speed -= 1;
         } else {
-            offset = -1
+            stack.speed += 1;
         }
-        updateStack(offset)
+        if (stack.speed > 10){
+            stack.speed = 10;
+        }
+        if (stack.speed < -10){
+            stack.speed = -10;
+        }
+
+        stack.delay = Math.abs((800 - Math.abs((stack.speed * 80))) + 70);
         updateDebug()
     });
 })
