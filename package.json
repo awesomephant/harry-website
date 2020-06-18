@@ -1,0 +1,19 @@
+{
+  "name": "hattu-website",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx @11ty/eleventy --serve",
+    "build": "npx @11ty/eleventy"
+  },
+  "author": "Max Kohler",
+  "license": "ISC",
+  "dependencies": {
+    "@11ty/eleventy": "^0.10.0",
+    "eleventy-plugin-sass": "^1.0.0",
+    "jsdom": "^16.2.2",
+    "sharp": "^0.25.2"
+  }
+}

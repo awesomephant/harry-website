@@ -1,0 +1,13 @@
+---
+layout: base
+---
+
+<ul class="debug">
+    <li id="debug-current"></li>
+</ul>
+
+<div class="stack" data-current='1'>
+    {% for i in (1..19) %}
+    <img src="/assets/rave {{i}}.jpg" alt="">
+    {% endfor %}
+</div>
