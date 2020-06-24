@@ -1,5 +1,6 @@
 .stack {
     img {
+        border-radius: 2px;
         display: block;
         width: 100%;
         max-height: 80vh;
@@ -10,15 +11,14 @@
         opacity: 0;
     }
 
-    @for $i from 1 to 20 {
+    @for $i from 1 to 227 {
         &[data-current="#{$i}"] img:nth-of-type(#{$i}){
             opacity: 1;
         }
 
         img:nth-of-type(#{$i}) {
-            $offsetY: ($i * 1px);
-            $offsetX: (random(1) * 1px);
-            transform: translateX(calc(-50% + #{$offsetX})) translateY(calc(-50% - #{$offsetY}));
+            $offsetX: (random(1) * 2px);
+            transform: translateX(calc(-50% + #{$offsetX})) translateY(-50%);
         }
     }
 

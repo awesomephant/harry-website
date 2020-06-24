@@ -5,10 +5,10 @@
 }
 
 body {
-    background-color: rgb(230, 209, 245);
+    background-color: rgb(245, 239, 251);
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAEklEQVQImWNgYGD4z0AswK4SAFXuAf8EPy+xAAAAAElFTkSuQmCC');
     background-size: 4px;
-    
+    overflow: hidden;
 }
 
 .debug {
