@@ -11,7 +11,7 @@ body {
 .site-title {
     color: white;
     font-weight: 300;
-    font-size: 3rem;
+    font-size: calc(1rem + 3vw);
     text-transform: uppercase;
     font-family: sans-serif;
     position: absolute;

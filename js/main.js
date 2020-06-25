@@ -38,7 +38,7 @@ function updateLogo() {
         logo.x = 0;
         logo.vxSign *= -1;
     }
-    
+
     if (logo.y + logo.h > window.innerHeight) {
         logo.y = window.innerHeight - logo.h;
         logo.vySign *= -1;
@@ -47,7 +47,7 @@ function updateLogo() {
         logo.y = 0;
         logo.vySign *= -1;
     }
-    
+
     logo.el.style.transform = `translateX(${logo.x}px) translateY(${logo.y}px)`
 }
 
@@ -96,7 +96,7 @@ function graphLoop() {
 function updateDebug() {
     debug.current.textContent = `Frame: ${stack.current}/${stack.total}`;
     debug.speed.textContent = `Speed: ${stack.speed}`;
-    if (stack.delay === 0){
+    if (stack.delay === 0) {
         debug.delay.textContent = `Delay: n/a`;
     } else {
         debug.delay.textContent = `Delay: ${stack.delay}ms`;
@@ -104,7 +104,7 @@ function updateDebug() {
     logo.vx = stack.speed;
     logo.vy = stack.speed;
 
-    if (stack.current === stack.total){
+    if (stack.current === stack.total) {
 
     }
 }
@@ -122,7 +122,7 @@ function updateStack(offset) {
             stack.el.setAttribute('data-current', stack.total)
             stack.speed = 0;
             running = false;
-            window.setTimeout(function(){
+            window.setTimeout(function () {
                 window.location = 'https://www.google.com/';
             }, 1000)
         }
@@ -133,6 +133,7 @@ function updateStack(offset) {
 
 function handleTouchStart(e) {
     lastTouchY = e.touches[0].clientY;
+    console.log(e)
 }
 function handleTouchEnd(e) {
     lastTouchY = 0;
@@ -140,18 +141,15 @@ function handleTouchEnd(e) {
 function handleTouchCancel(e) { }
 function handleTouchMove(e) {
     const touch = e.changedTouches[0];
-    const deltaY = lastTouchY - touch.clientY;
-    let offset = 0;
-    if (deltaY > 0) {
-        stack.speed += 1;
-    } else {
-        stack.speed -= 1;
-    }
+    let s = Math.round(20 * ((window.innerHeight / 2) - Math.round(touch.clientY)) / window.innerHeight);
+    console.log(s)
+    stack.speed = s;
+    stack.delay = Math.abs((800 - Math.abs((stack.speed * 80))) + 70);
     updateDebug()
 }
 
 function stackLoop() {
-    if (running){
+    if (running) {
         let offset = 1;
         if (stack.speed < 0) {
             offset = -1;
@@ -191,7 +189,7 @@ window.addEventListener('DOMContentLoaded', () => {
         e.preventDefault()
         if (e.deltaY > 0 && stack.current > 1) {
             stack.speed -= 1;
-        } else if (e.deltaY < 0){
+        } else if (e.deltaY < 0) {
             stack.speed += 1;
         }
         if (stack.speed > 10) {
