@@ -8,6 +8,17 @@ body {
     background-color: rgb(0, 0, 0);
     overflow: hidden;
 }
+.site-title {
+    color: white;
+    font-weight: 300;
+    font-size: 3rem;
+    text-transform: uppercase;
+    font-family: sans-serif;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
 
 .debug {
     position: absolute;
@@ -35,5 +46,7 @@ body {
 }
 
 .debug-data {
-    display: none;
+    font-family: sans-serif;
+    font-size: 12px;
+    text-transform: uppercase;
 }

@@ -10,15 +10,51 @@ let graph = {
     values: [],
     resX: 150,
 }
+let logo = {
+    el: null,
+    x: 10,
+    y: 10,
+    w: 0,
+    h: 0,
+    vx: 1,
+    vy: 1,
+    vxSign: 1,
+    vySign: 1
+}
 
 let debug = {}
 let lastTouchY = 0;
 
+function updateLogo() {
+    logo.x += logo.vx * logo.vxSign
+    logo.y += logo.vy * logo.vySign
+
+    if ((logo.x + logo.w) > window.innerWidth) {
+        logo.x = window.innerWidth - logo.w;
+        logo.vxSign *= -1;
+    }
+    if (logo.x < 0) {
+        logo.x = 0;
+        logo.vxSign *= -1;
+    }
+    
+    if (logo.y + logo.h > window.innerHeight) {
+        logo.y = window.innerHeight - logo.h;
+        logo.vySign *= -1;
+    }
+    if (logo.y < 0) {
+        logo.y = 0;
+        logo.vySign *= -1;
+    }
+    
+    logo.el.style.transform = `translateX(${logo.x}px) translateY(${logo.y}px)`
+}
+
 function drawGraph() {
-    function scaleX(value){
+    function scaleX(value) {
         return ((graph.el.canvas.width / graph.resX) * value)
     }
-    function scaleY(value){
+    function scaleY(value) {
         const range = 20;
         return (graph.el.canvas.height / 2) + (((graph.el.canvas.height - 10) / range) * -1 * value)
     }
@@ -36,12 +72,12 @@ function drawGraph() {
     graph.el.moveTo(0, scaleY(0));
     graph.el.lineTo(graph.el.canvas.width, scaleY(0));
     graph.el.stroke();
-    
+
     graph.el.strokeStyle = 'white'
     graph.el.lineWidth = '2'
     graph.el.beginPath();
     graph.el.moveTo(0, scaleY(graph.values[0]));
-    
+
     for (let i = 1; i < graph.values.length; i++) {
         const v = graph.values[i]
         let x = scaleX(i)
@@ -52,6 +88,7 @@ function drawGraph() {
 
 function graphLoop() {
     drawGraph()
+    updateLogo()
     window.requestAnimationFrame(graphLoop)
 }
 
@@ -59,6 +96,8 @@ function updateDebug() {
     debug.current.textContent = `Current: ${stack.current}`;
     debug.speed.textContent = `Speed: ${stack.speed}`;
     debug.delay.textContent = `Delay: ${stack.delay}ms`;
+    logo.vx = stack.speed;
+    logo.vy = stack.speed;
 }
 
 function updateStack(offset) {
@@ -114,6 +153,12 @@ window.addEventListener('DOMContentLoaded', () => {
     let ge = document.querySelector('#graph')
     graph.el = ge.getContext('2d');
     stack.total = stack.items.length;
+
+    logo.el = document.querySelector('.site-title')
+    let box = logo.el.getBoundingClientRect();
+    logo.w = box.width;
+    logo.h = box.height;
+
 
     updateDebug();
     graphLoop();
