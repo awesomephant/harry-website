@@ -21,7 +21,7 @@ let logo = {
     vxSign: 1,
     vySign: 1
 }
-
+let running = true;
 let debug = {}
 let lastTouchY = 0;
 
@@ -93,11 +93,15 @@ function graphLoop() {
 }
 
 function updateDebug() {
-    debug.current.textContent = `Current: ${stack.current}`;
+    debug.current.textContent = `Current: ${stack.current}/${stack.total}`;
     debug.speed.textContent = `Speed: ${stack.speed}`;
     debug.delay.textContent = `Delay: ${stack.delay}ms`;
     logo.vx = stack.speed;
     logo.vy = stack.speed;
+
+    if (stack.current === stack.total){
+
+    }
 }
 
 function updateStack(offset) {
@@ -107,9 +111,11 @@ function updateStack(offset) {
         if (current <= stack.total && current >= 1) {
             stack.current = current;
         } else if (current < 1) {
-            stack.current = stack.total;
-        } else if (current > stack.total) {
             stack.current = 1;
+            stack.speed = 0;
+        } else if (current > stack.total - 1) {
+            running = false;
+            window.location = 'https://www.google.com/';
         }
         stack.el.setAttribute('data-current', stack.current)
         updateDebug()
@@ -136,12 +142,14 @@ function handleTouchMove(e) {
 }
 
 function stackLoop() {
-    let offset = 1;
-    if (stack.speed < 0) {
-        offset = -1;
+    if (running){
+        let offset = 1;
+        if (stack.speed < 0) {
+            offset = -1;
+        }
+        updateStack(offset)
+        window.setTimeout(stackLoop, stack.delay)
     }
-    updateStack(offset)
-    window.setTimeout(stackLoop, stack.delay)
 }
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -172,9 +180,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('wheel', e => {
         e.preventDefault()
-        if (e.deltaY > 0) {
+        if (e.deltaY > 0 && stack.current > 1) {
             stack.speed -= 1;
-        } else {
+        } else if (e.deltaY < 0){
             stack.speed += 1;
         }
         if (stack.speed > 10) {
