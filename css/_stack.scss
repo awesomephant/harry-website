@@ -7,12 +7,12 @@
         position: absolute;
         left: 50%;
         top: 50%;
-        opacity: 0;
+        visibility: hidden;
     }
 
     @for $i from 1 to 228 {
         &[data-current="#{$i}"] img:nth-of-type(#{$i}){
-            opacity: 1;
+            visibility: visible;
         }
 
         img:nth-of-type(#{$i}) {

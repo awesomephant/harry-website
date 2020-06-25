@@ -142,7 +142,6 @@ function handleTouchCancel(e) { }
 function handleTouchMove(e) {
     const touch = e.changedTouches[0];
     let s = Math.round(20 * ((window.innerHeight / 2) - Math.round(touch.clientY)) / window.innerHeight);
-    console.log(s)
     stack.speed = s;
     stack.delay = Math.abs((800 - Math.abs((stack.speed * 80))) + 70);
     updateDebug()
