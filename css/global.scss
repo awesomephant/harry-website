@@ -12,7 +12,28 @@ body {
 .debug {
     position: absolute;
     bottom: 0;
-    color: black;
-    font-size: 25px;
+    color: white;
+    font-size: 20px;
+    align-items: flex-end;
     padding: .5em;
+    width: 100%;
+    span {
+        display: block;
+    }
+    canvas {
+        border: 1px solid gray;
+        image-rendering: pixelated;
+    }
+    h2 {
+        font-size: 12px;
+        letter-spacing: .02em;
+        margin-bottom: .5em;
+        text-transform: uppercase;
+        font-weight: normal;
+        font-family: sans-serif;
+    }
+}
+
+.debug-data {
+    display: none;
 }

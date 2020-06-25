@@ -2,11 +2,15 @@
 layout: base
 ---
 
-<ul class="debug">
-    <li id="debug-current"></li>
-    <li id="debug-speed"></li>
-    <li id="debug-delay"></li>
-</ul>
+<aside class="debug">
+    <div class="debug-data">
+        <span id="debug-current"></span>
+        <span id="debug-speed"></span>
+        <span id="debug-delay"></span>
+    </div>
+    <h2>Speed (scroll to adjust)</h2>
+    <canvas width='300px' height='100px' id="graph"></canvas>
+</aside>
 
 <div class="stack" data-current='1'>
     {% for i in (1..227) %}
