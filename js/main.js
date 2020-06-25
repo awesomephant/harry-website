@@ -4,6 +4,7 @@ let stack = {
     total: 0,
     speed: 0,
     current: 1,
+    delay: 0
 }
 let graph = {
     el: null,
@@ -93,9 +94,13 @@ function graphLoop() {
 }
 
 function updateDebug() {
-    debug.current.textContent = `Current: ${stack.current}/${stack.total}`;
+    debug.current.textContent = `Frame: ${stack.current}/${stack.total}`;
     debug.speed.textContent = `Speed: ${stack.speed}`;
-    debug.delay.textContent = `Delay: ${stack.delay}ms`;
+    if (stack.delay === 0){
+        debug.delay.textContent = `Delay: n/a`;
+    } else {
+        debug.delay.textContent = `Delay: ${stack.delay}ms`;
+    }
     logo.vx = stack.speed;
     logo.vy = stack.speed;
 
@@ -114,6 +119,8 @@ function updateStack(offset) {
             stack.current = 1;
             stack.speed = 0;
         } else if (current > stack.total - 1) {
+            stack.el.setAttribute('data-current', stack.total)
+            stack.speed = 0;
             running = false;
             window.location = 'https://www.google.com/';
         }

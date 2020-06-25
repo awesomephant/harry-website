@@ -10,7 +10,7 @@
         opacity: 0;
     }
 
-    @for $i from 1 to 227 {
+    @for $i from 1 to 228 {
         &[data-current="#{$i}"] img:nth-of-type(#{$i}){
             opacity: 1;
         }
