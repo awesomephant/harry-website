@@ -122,7 +122,9 @@ function updateStack(offset) {
             stack.el.setAttribute('data-current', stack.total)
             stack.speed = 0;
             running = false;
-            window.location = 'https://www.google.com/';
+            window.setTimeout(function(){
+                window.location = 'https://www.google.com/';
+            }, 1000)
         }
         stack.el.setAttribute('data-current', stack.current)
         updateDebug()
