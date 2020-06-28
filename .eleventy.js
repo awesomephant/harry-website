@@ -8,6 +8,7 @@ module.exports = function (eleventyConfig) {
     eleventyConfig.addPassthroughCopy("js");
     eleventyConfig.addPassthroughCopy("assets");
     eleventyConfig.addPassthroughCopy("favicon.ico");
+    eleventyConfig.addPassthroughCopy("manifest.json");
     eleventyConfig.addWatchTarget("./js");
     eleventyConfig.addPlugin(pluginSass, {});
 };
